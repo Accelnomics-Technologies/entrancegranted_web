@@ -1,0 +1,62 @@
+version: '3.7'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+    command: npm start
+    volumes:
+      - ./frontend/src:/usr/app/src
+    ports:
+      - '3002:3000'
+    tty: true # comunicate with terminal
+    stdin_open: true # open in/out connection from the terminal
+    environment:
+      - REACT_APP_PORT=3001
+    networks:
+      - entrancegranted
+
+  backend:
+    build:
+      context: ./backend
+    command: npm run dev
+    volumes:
+      - ./backend/src:/usr/app/src
+    ports:
+      - '3001:3001'
+    environment:
+      - PORT=3001
+    networks:
+      - entrancegranted
+
+
+  nfs:
+    container_name: nfs
+    image: itsthenetwork/nfs-server-alpine:latest
+    # restart: unless-stopped
+    privileged: true
+    environment:
+      - SHARED_DIRECTORY=/data
+    volumes:
+      - ./nfs:/data
+    ports:
+      - 2049:2049
+    networks:
+      - entrancegranted
+
+
+  mongodb:
+    volumes:
+      - ./mongo_db:/data/db
+    image: mongo:latest
+    ports:
+      - "27017:27017"  
+    networks:
+      - entrancegranted
+
+# volumes:
+#    mongo_db:
+
+networks:
+  entrancegranted:
+    driver: bridge
