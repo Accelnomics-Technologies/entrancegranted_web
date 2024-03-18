@@ -8,7 +8,7 @@ services:
     volumes:
       - ./frontend/src:/usr/app/src
     ports:
-      - '3002:3000'
+      - '3000:3000'
     tty: true # comunicate with terminal
     stdin_open: true # open in/out connection from the terminal
     environment:
