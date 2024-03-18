@@ -8,13 +8,14 @@ services:
     volumes:
       - ./frontend/src:/usr/app/src
     ports:
-      - '3000:3000'
+      - '3002:3000'
     tty: true # comunicate with terminal
     stdin_open: true # open in/out connection from the terminal
     environment:
       - REACT_APP_PORT=3001
     networks:
       - entrancegranted
+    container_name: entrancegranted-frontend
 
   backend:
     build:
@@ -28,10 +29,10 @@ services:
       - PORT=3001
     networks:
       - entrancegranted
+    container_name: entrancegranted-backend
 
 
   nfs:
-    container_name: nfs
     image: itsthenetwork/nfs-server-alpine:latest
     # restart: unless-stopped
     privileged: true
@@ -43,7 +44,7 @@ services:
       - 2049:2049
     networks:
       - entrancegranted
-
+    container_name: entrancegranted-nfs
 
   mongodb:
     volumes:
@@ -53,6 +54,7 @@ services:
       - "27017:27017"  
     networks:
       - entrancegranted
+    container_name: entrancegranted-mongodb
 
 # volumes:
 #    mongo_db:
