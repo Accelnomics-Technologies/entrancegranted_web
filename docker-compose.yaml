@@ -8,7 +8,7 @@ services:
     volumes:
       - ./frontend/src:/usr/app/src
     ports:
-      - '3000:3000'
+      - '3002:3000'
     tty: true # comunicate with terminal
     stdin_open: true # open in/out connection from the terminal
     environment:
@@ -20,9 +20,9 @@ services:
   backend:
     build:
       context: ./backend
-    command: npm run dev
+    # command: npm run dev
     volumes:
-      - ./backend/src:/usr/app/src
+      - ./backend:/usr/app/
     ports:
       - '3001:3001'
     environment:
@@ -32,19 +32,19 @@ services:
     container_name: entrancegranted-backend
 
 
-  nfs:
-    image: itsthenetwork/nfs-server-alpine:latest
-    # restart: unless-stopped
-    privileged: true
-    environment:
-      - SHARED_DIRECTORY=/data
-    volumes:
-      - ./nfs:/data
-    ports:
-      - 2049:2049
-    networks:
-      - entrancegranted
-    container_name: entrancegranted-nfs
+  # nfs:
+  #   image: itsthenetwork/nfs-server-alpine:latest
+  #   # restart: unless-stopped
+  #   privileged: true
+  #   environment:
+  #     - SHARED_DIRECTORY=/data
+  #   volumes:
+  #     - ./nfs:/data
+  #   ports:
+  #     - 2049:2049
+  #   networks:
+  #     - entrancegranted
+  #   container_name: entrancegranted-nfs
 
   mongodb:
     volumes:

@@ -17,11 +17,11 @@ mongoose.connect(process.env.DB, {
 });
 
 mongoose.connection.on("connected", () => {
-  consoleLog(`MongoDB Connected`);
+  console.log(`MongoDB Connected`);
 });
 
 mongoose.connection.on("error", (error) => {
-  consoleLog(`Database not working!!!: ${error}`, "error");
+  console.log(`Database not working!!!: ${error}`, "error");
 });
 
 const port = process.env.PORT || 4001;
@@ -54,5 +54,5 @@ app.use("/api", apiRoutes);
 app.use("*", (req, res) => errorHandler(res, "API Not Found", 404));
 
 server.listen(port, () => {
-  consoleLog(`Server running on port: ${port}`);
+  console.log(`Server running on port: ${port}`);
 });
