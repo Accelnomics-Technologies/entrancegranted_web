@@ -1,0 +1,110 @@
+html,
+body {
+  min-height: 100%;
+}
+
+#__next {
+  height: 100%;
+}
+
+code {
+  font-family: 'Poppins', sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue';
+  padding: 0.1rem 0.4rem;
+  font-size: 90%;
+  color: #d400ff;
+  border-radius: 0.1335rem;
+}
+
+code:not([class*='language-']):before,
+code:not([class*='language-']):after {
+  content: '`';
+}
+
+code[class*='language-'] {
+  padding: 0;
+}
+
+label {
+  color: #131338;
+}
+
+.MuiFormControl-root {
+  border: 1px solid #323267 !important;
+  height: 50px !important;
+  border-radius: 12px !important;
+}
+
+input {
+  border: none !important;
+  line-height: normal !important;
+  padding: 0 !important;
+}
+
+.MuiFormControl-root .MuiInputBase-formControl {
+  padding: 14px 15px;
+  border: none !important;
+}
+
+label {
+  color: rgb(114, 118, 132);
+  font-size: 14px;
+}
+
+.layout-navbar {
+  background: #0C0C1E;
+  padding: 10px 0;
+}
+
+.logo_header {
+  font-family: Poppins;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 36px;
+  text-align: left;
+  color: #fff;
+}
+
+.logo_header img {
+  display: block;
+  width: 50px;
+  height: 50px;
+  border-radius: 16px;
+  background: #FFFFFF;
+  padding: 8px;
+  margin-right: 12px;
+}
+
+.menu-content.MuiBox-root.css-n903wg {
+  position: absolute;
+  right: 90px;
+}
+
+.menu-content a {
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.menu-content a p {
+  color: #1AAEFF !important;
+  position: relative;
+}
+
+.menu-content a {
+  position: relative;
+  color: #1AAEFF;
+}
+
+.menu-content a::before {
+  background: #1AAEFF;
+  width: 20%;
+  height: 2px;
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  left: 48%;
+}
+
+.MuiListItemIcon-root svg {
+  display: none;
+}
