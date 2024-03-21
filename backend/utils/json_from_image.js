@@ -43,7 +43,23 @@ const  extractTextFromImage=async(photo)=> {
 
 
 const getJson=async (prompt)=> {
-    let user_content = `${prompt} \nThe given text is extracted from a ticket stub image, review the details of the game and create a JSON object in the following format. The field "Memorable_Moments" should encapsulate all the essence of significant sporting events, including extraordinary feats, unexpected outcomes, big player appearances and emotional highlights. This encompasses game-winning shots, breakthrough performances, record-breaking achievements, iconic rivalries, comebacks, retirement farewells, historic firsts, acts of sportsmanship, unexpected triumphs, final score and personal triumphs over adversity. Ensure inclusion of final scores, historical context, and relevant details. Make sure to keep the field "Memorable_Moments" non empty. If any information is not available from the ticket or event details, leave it as null. Make sure to fill in what you can for partial information.\n\n<format>\n{\n "event_name_or_league_name": "", # e.g., "Premier League", "World Cup", "Olympics", etc.\n "exact_sport_name": "", # e.g., "Men's Basketball", "Women's American Football", "Men's Cricket", etc.\n "teams_played": {\n   "home": "",\n   "away": ""\n },\n "date": "", # in YYYY-MM-DD format\n "time": "", # in HH:MM (12-hour format)\n "price": "", # in the given currency\n "venue": "",\n "Memorable_Moments": [ ] # List of all the moments in string format. Make sure to keep it non-empty.\n}\n</format>\nIf any of the field in the JSON object is not obtained from the given text data, keep it as Null. If only partial information is available, fill in what you can and leave the rest as Null.`;
+    let user_content = `${prompt} \nThe given text is extracted from a ticket stub image, review the details of the game and create a JSON object in the following format. The field "Memorable_Moments" should encapsulate all the essence of significant sporting events, including extraordinary feats, unexpected outcomes, big player appearances and emotional highlights. This encompasses game-winning shots, breakthrough performances, record-breaking achievements, iconic rivalries, comebacks, retirement farewells, historic firsts, acts of sportsmanship, unexpected triumphs, final score and personal triumphs over adversity. Ensure inclusion of final scores, historical context, and relevant details. Make sure to keep the field "Memorable_Moments" non empty. If any information is not available from the ticket or event details, leave it as null. Make sure to fill in what you can for partial information.
+    <format>
+    {
+        "event_name_or_league_name": "", # e.g., "Premier League", "World Cup", "Olympics", etc.
+        "exact_sport_name": "", # e.g., "Men's Basketball", "Women's American Football", "Men's Cricket", etc.
+        "teams_played": {
+            "home": "",
+            "away": ""
+        },
+        "date": "", # in YYYY-MM-DD format
+        "time": "", # in HH:MM (12-hour format)
+        "price": "", # in the given currency
+        "venue": "",
+        "Memorable_Moments": [ ] # List of all the moments in string format. Make sure to keep it non-empty.
+    }
+    </format>
+    If any of the field in the JSON object is not obtained from the given text data, keep it as Null. If only partial information is available, fill in what you can and leave the rest as Null.`;
 
   const completion = await openai.chat.completions.create({
     messages: [
