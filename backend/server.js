@@ -11,6 +11,13 @@ const mongoose = require("mongoose");
 const fileUpload = require("express-fileupload");
 const { errorHandler } = require("./utils");
 const apiRoutes = require("./routes/index");
+var AWS = require('aws-sdk');
+const { OpenAI } = require('openai');
+const fs = require('fs');
+const { getJSONFromImage } = require('./utils/json_from_image'); // Assuming your function is named processData and is in utils.js
+
+
+
 
 mongoose.connect(process.env.DB, {
   autoIndex: true,
@@ -46,6 +53,18 @@ app.use(
     credentials: true,
   })
 );
+
+// Define a route for POST API
+app.post("/api/get_json", (req, res) => {
+  // Handle POST request logic here
+  const requestData = req.body.imagePath;
+
+  // Call the utility function to process the data
+  const processedData = getJSONFromImage(requestData);
+
+  // Send a response back to the client
+  res.status(200).json({ message: 'Data processed successfully', processedData });
+});
 
 //routes
 app.use("/api", apiRoutes);
