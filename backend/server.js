@@ -15,9 +15,9 @@ var AWS = require('aws-sdk');
 const { OpenAI } = require('openai');
 const fs = require('fs');
 const { getJSONFromImage } = require('./utils/json_from_image'); // Assuming your function is named processData and is in utils.js
-
-
-
+const multer = require('multer');
+const upload = multer(); // Initialize multer
+const {ticketSchema} = require("./models/tickets")
 
 mongoose.connect(process.env.DB, {
   autoIndex: true,
@@ -55,15 +55,25 @@ app.use(
 );
 
 // Define a route for POST API
-app.post("/api/get_json", (req, res) => {
-  // Handle POST request logic here
-  const requestData = req.body.imagePath;
+app.post("/api/get_json" ,async (req, res) => {
 
-  // Call the utility function to process the data
-  const processedData = getJSONFromImage(requestData);
+  const processedData = await getJSONFromImage(req?.files?.imagePath?.tempFilePath);
 
-  // Send a response back to the client
-  res.status(200).json({ message: 'Data processed successfully', processedData });
+  await ticketSchema.create({
+    sportName:processedData.exact_sport_name,
+    eventName:processedData.event_name_or_league_name,
+    homeTeam:processedData.teams_played.home,
+    awayTeam:processedData.teams_played.away,
+    venue:processedData.venue,
+    price:processedData.price,
+    date:processedData.date,
+    time:processedData.time,
+    imageLocation:req?.files?.imagePath?.tempFilePath,
+    gameDetails:processedData.Memorable_Moments
+  })
+
+  
+  res.status(200).json({ message: 'Data processed successfully',processedData });
 });
 
 //routes
