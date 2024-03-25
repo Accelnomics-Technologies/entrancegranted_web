@@ -11,6 +11,9 @@ const mongoose = require("mongoose");
 const fileUpload = require("express-fileupload");
 const apiRoutes = require("./routes/index");
 
+const path = require("path"); 
+
+
 mongoose.connect(process.env.DB, {
   autoIndex: true,
 });
@@ -33,7 +36,15 @@ const originLocal = ["http://localhost:3000"];
 
 //middlewares
 app.use(volleyball);
-app.use(fileUpload({ useTempFiles: true, tempFileDir: "/tmp/" }));
+
+
+app.use(
+  fileUpload({
+    useTempFiles: true, // Enable temporary file creation
+    tempFileDir: path.join(__dirname, "uploads"), // Adjust the path as needed
+  })
+);
+
 app.use(express.json({ limit: "100mb", extended: true }));
 app.use(
   express.urlencoded({ extended: true, limit: "1mb", parameterLimit: 100000 })

@@ -6,6 +6,7 @@ var AWS = require('aws-sdk');
 const { OpenAI } = require('openai');
 const fs = require('fs');
 const { getJSONFromImage } = require('../../utils/json_from_image');
+const path = require("path");
 
 
 /**
@@ -15,26 +16,40 @@ const { getJSONFromImage } = require('../../utils/json_from_image');
 module.exports.getJson = async (req, res) => {
 
     try {
-        const processedData = await getJSONFromImage(req?.files?.imagePath?.tempFilePath);
-    
-        await ticketSchema.create({
-          sportName: processedData.exact_sport_name,
-          eventName: processedData.event_name_or_league_name,
-          homeTeam: processedData.teams_played.home,
-          awayTeam: processedData.teams_played.away,
-          venue: processedData.venue,
-          price: processedData.price,
-          date: processedData.date,
-          time: processedData.time,
-          imageLocation: req?.files?.imagePath?.tempFilePath,
-          gameDetails: processedData.Memorable_Moments
+        // Check if the file was uploaded
+        if (!req.files || !req.files.imagePath) {
+            return res.status(400).json({ message: 'No file uploaded' });
+        }
+        
+        let imagePath = req.files.imagePath;
+        const uploadDir = path.join(__dirname, "..", "..", "uploads");
+        const newFilePath = path.join(uploadDir, imagePath.name); // New file path
+
+        imagePath.mv(newFilePath, async (err) => {
+            if (err) {
+                return res.status(500).json({ message: 'File upload failed', error: err });
+            }
+
+            const processedData = await getJSONFromImage(newFilePath); 
+
+            await ticketSchema.create({
+                sportName: processedData.exact_sport_name,
+                eventName: processedData.event_name_or_league_name,
+                homeTeam: processedData.teams_played.home,
+                awayTeam: processedData.teams_played.away,
+                venue: processedData.venue,
+                price: processedData.price,
+                date: processedData.date,
+                time: processedData.time,
+                imageLocation: newFilePath, 
+                gameDetails: processedData.Memorable_Moments
+            });
+
+            res.status(200).json({ message: 'Data processed successfully', processedData });
         });
-  
-    
-    res.status(200).json({ message: 'Data processed successfully',processedData });
- } catch (error) {
-    res.status(500).json({ message: 'Internal server error', error: error.message });
-  }
+    } catch (error) {
+        res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
 };
 
 /**
