@@ -22,7 +22,7 @@ module.exports.getJson = async (req, res) => {
         }
         
         let imagePath = req.files.imagePath;
-        const uploadDir = path.join(__dirname, "..", "..", "uploads");
+        const uploadDir = path.join(__dirname, "..", "..","..", "..", "uploads");
         const newFilePath = path.join(uploadDir, imagePath.name); // New file path
 
         imagePath.mv(newFilePath, async (err) => {
@@ -84,7 +84,7 @@ module.exports.getTicket = async (req, res) => {
  * @api {GET} /api/admin/all_tickets
  * @params user signup
  */
-module.exports.getAlltickets = async (req, res) => {
+module.exports.get_Alltickets = async (req, res) => {
     try {
         // Fetch all tickets from the database
         const tickets = await ticketSchema.find({});
@@ -157,11 +157,36 @@ module.exports.updateTicket = async (req, res) => {
     
         // If the ticket is found and updated, return the updated ticket
         res.json(ticket);
-      } catch (err) {
+    } catch (err) {
         // If an error occurs, return a 500 Internal Server Error response
         console.error('Error updating ticket:', err);
         res.status(500).json({ error: 'Internal Server Error' });
-      }
+    }
 
  
+};
+
+/**
+ * @api {GET} /api/admin/update_tickets
+ * @params ticketId
+ */
+module.exports.getTicketImage = async (req, res) => {
+    try {
+        // Get the ticket ID from the request parameters
+        const ticketId = req.query.ticket_id;
+        const ticket = await ticketSchema.findById(ticketId);
+
+        if (!ticket) {
+          return res.status(404).json({ error: 'Ticket not found' });
+        }
+
+        const imageLocation = ticket.imageLocation;
+    
+    
+        res.sendFile(path.join(__dirname, '..', '..', '..', imageLocation));
+    } catch (err) {
+      // If an error occurs, return a 500 Internal Server Error response
+        console.error('Error serving image:', err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 };

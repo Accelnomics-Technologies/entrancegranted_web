@@ -12,6 +12,7 @@ const fileUpload = require("express-fileupload");
 const apiRoutes = require("./routes/index");
 
 const path = require("path"); 
+const uploadsDirectory = path.join(__dirname, "..",'uploads');
 
 
 mongoose.connect(process.env.DB, {
@@ -37,11 +38,11 @@ const originLocal = ["http://localhost:3000"];
 //middlewares
 app.use(volleyball);
 
-
+app.use('/uploads', express.static(uploadsDirectory));
 app.use(
   fileUpload({
     useTempFiles: true, // Enable temporary file creation
-    tempFileDir: path.join(__dirname, "uploads"), // Adjust the path as needed
+    tempFileDir: path.join(__dirname,"..", "..","uploads"), // Adjust the path as needed
   })
 );
 

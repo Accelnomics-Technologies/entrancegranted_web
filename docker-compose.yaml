@@ -22,7 +22,8 @@ services:
       context: ./backend
     # command: npm run dev
     volumes:
-      - ./backend:/usr/app/
+      - ./backend:/app/
+      - ../uploads:/uploads
     ports:
       - '3001:3001'
     environment:
