@@ -280,10 +280,284 @@
 }
 
 
-@media (max-width:850px) {
-    .upload_btn {
-        display: none !important;
+.modalboxfileupload .MuiPaper-elevation {
+    background: rgba(3, 3, 43, 1) !important;
+}
+
+.dropcontent {
+    font-size: 13px !important;
+}
+
+.dropcontent {
+    font-size: 14px !important;
+    color: #fff;
+}
+
+.dropcontent span {
+    font-size: 14px !important;
+    color: rgba(26, 174, 255, 1);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.upload_modalhead {
+    position: relative;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    border: none !important;
+}
+
+.upload_modalhead h2 {
+    font-family: Poppins;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 33px;
+    text-align: left;
+    color: #fff;
+}
+
+.upload_modalhead button {
+    position: absolute;
+    right: 20px;
+    top: 22px;
+    padding: 0;
+    background: transparent !important;
+}
+
+.upload_modalhead button svg {
+    width: 25px;
+    height: 25px;
+    color: #fff;
+}
+
+.upload_modalcontent {
+    padding: 1rem 1.5rem 1.5rem;
+    overflow-y: auto;
+}
+
+.upload_modalcontent li {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    margin-top: 25px;
+    background: rgba(14, 14, 65, 1);
+    border-radius: 20px;
+    align-items: flex-start;
+}
+
+.upload_modalcontent .filedetail {
+    display: flex !important;
+    width: 95%;
+}
+
+.filepreview img {
+    width: 70px;
+    height: 70px;
+    border-radius: 16px;
+    margin-right: 15px;
+}
+
+.filename {
+    color: #fff !important;
+    margin-bottom: 5px !important;
+}
+
+.filesize {
+    margin-bottom: 10px !important;
+}
+
+.upload_modalcontent li button {
+    position: absolute;
+    right: 20px;
+    top: 22px;
+    padding: 0;
+    background: transparent !important;
+}
+
+.upload_modalcontent li button svg {
+    width: 23px;
+    height: 23px;
+    color: #fff;
+}
+
+.upload_btn button {
+    background: linear-gradient(150.24deg, #1AAEFF 12.02%, #41BCFF 84.41%);
+    width: 170px;
+    height: 46px;
+    border-radius: 16px;
+    margin: 30px auto;
+    display: block;
+}
+
+.item_details {
+    width: 100%;
+}
+
+.modalboxeditticket {
+    position: relative;
+}
+
+.modal_boxpanel .MuiPaper-elevation {
+    max-width: 840px !important;
+    background: rgba(3, 3, 43, 1) !important;
+    width: 90%;
+    border: 1px solid rgba(70, 73, 89, 1) !important;
+    box-shadow: 0px 6px 40px 0px rgba(0, 0, 0, 0.08) !important;
+    border-radius: 20px !important;
+    height: auto;
+    overflow-y: hidden;
+}
+
+.editticket_formfields {
+    position: relative;
+}
+
+.editticket_formfields .editticket_formfield {
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.editticket_formfields .editticket_formfield div {
+    color: #fff !important;
+}
+
+.editticket_formfield label {
+    font-size: 16px !important;
+    font-weight: 400;
+    line-height: 24px;
+    text-align: left;
+    color: #727684;
+}
+
+.editticket_formfield button {
+    background: linear-gradient(150.24deg, rgba(26, 174, 255, 0.15) 12.02%, rgba(65, 188, 255, 0.15) 84.41%) !important;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    color: rgb(26, 174, 255);
+    padding: 8px;
+    margin-right: -8px;
+}
+
+.formimg_field {
+    max-height: 300px;
+    text-align: center;
+}
+
+.formimg_field img {
+    width: 95%;
+    margin: 0 auto;
+}
+
+.edit_modal_action {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.edit_modal_action .deletetkt_btn {
+    width: 210px;
+    height: 50px;
+    border-radius: 16px;
+    background: #F32525 !important;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    text-align: center;
+}
+
+.edit_modal_action .updatetkt_btn {
+    width: 210px;
+    height: 50px;
+    border-radius: 16px;
+    background: linear-gradient(150.24deg, #1AAEFF 12.02%, #41BCFF 84.41%) !important;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    text-align: center;
+}
+
+.orderFirst {
+    order: 1;
+}
+
+.orderSecond {
+    order: 2;
+}
+
+@media (max-width:450px) {
+    .edit_modal_action {
+        display: flex !important;
+        flex-direction: column-reverse;
+        padding: 0 !important;
     }
+
+    .edit_modal_action .updatetkt_btn {
+        min-width: 100%;
+        height: auto;
+        border-radius: 16px;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        line-height: 24px;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    .edit_modal_action .deletetkt_btn {
+        min-width: 100%;
+        height: auto;
+        border-radius: 16px;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        line-height: 24px;
+        text-align: center;
+        background: transparent !important;
+        color: #F32525 !important;
+        text-decoration: underline !important;
+    }
+}
+
+@media (max-width:600px) {
+    .upload_btn {
+        height: auto;
+        border-radius: 16px !important;
+        padding: 10px 15px !important;
+        margin: 12px auto 0 !important;
+        min-width: auto !important;
+        white-space: nowrap;
+        font-size: 14px !important;
+    }
+}
+
+
+@media (max-width:767px) {
+    .editfirst_row {
+        flex-direction: column-reverse;
+    }
+
+    .orderFirst {
+        order: 2;
+    }
+
+    .orderSecond {
+        order: 1;
+    }
+
+
+}
+
+
+
+
+
+
+@media (max-width:850px) {
+    /* .upload_btn {
+        display: none !important;
+    } */
 
     .content_header_sectcion {
         display: flex !important;
@@ -317,5 +591,11 @@
     .content_header_sectcion h2 {
         margin-bottom: -10px !important;
         font-size: 20px !important;
+    }
+
+    .upload_modalcontent .filedetail {
+        display: flex !important;
+        width: 85%;
+        word-break: break-all;
     }
 }
