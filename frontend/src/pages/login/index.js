@@ -134,8 +134,8 @@ const LoginPage = () => {
         icon:"success",
         text:"Login Success"
       })
-
-      router?.push("/")
+      
+      router?.push("/home/")
 
 
     } else{
