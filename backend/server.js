@@ -12,6 +12,7 @@ const fileUpload = require("express-fileupload");
 const apiRoutes = require("./routes/index");
 
 const path = require("path"); 
+const { errorHandler } = require("./utils");
 const uploadsDirectory = path.join(__dirname, "..",'uploads');
 
 
