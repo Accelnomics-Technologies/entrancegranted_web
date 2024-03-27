@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
-import { Button } from '@mui/material'
+import { Button, Dialog } from '@mui/material'
 import InputAdornment from '@mui/material/InputAdornment'
 import IconButton from '@mui/material/IconButton'
 import Pagination from '@mui/material/Pagination'
@@ -11,6 +11,8 @@ import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import CustomTextField from 'src/@core/components/mui/text-field'
 import styles from './home.module.css'
+import UploadModal from 'src/container/UploadModal'
+import EditTicket from 'src/container/EditTicket'
 
 const Home = () => {
   // Sample card data
@@ -166,6 +168,22 @@ const Home = () => {
   const startIndex = (page - 1) * cardsPerPage
   const endIndex = Math.min(startIndex + cardsPerPage, cardData.length)
 
+  const [modalOpen, setModalOpen] = useState(false)
+  const [editModalOpen, setEditModalOpen] = useState(false)
+
+  const handleUploadClick = () => {
+    setModalOpen(true)
+  }
+
+  // Function to handle modal close
+  const handleCloseModal = () => {
+    setModalOpen(false)
+  }
+
+  const handleEditModalOpen = () => {
+    setEditModalOpen(true)
+  }
+
   return (
     <>
       <Grid container spacing={6}>
@@ -176,7 +194,8 @@ const Home = () => {
           className={styles.content_header_sectcion}
         >
           <h2>Uploaded Tickets</h2>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+
+          <div style={{ display: 'flex', alignItems: 'center' }} className='search_field_dashboard'>
             <CustomTextField
               fullWidth
               placeholder='Search'
@@ -199,12 +218,13 @@ const Home = () => {
               className={styles.search_fieldhome}
             />
 
-            <Button type='submit' variant='contained' className={styles.upload_btn}>
+            <Button onClick={handleUploadClick} variant='contained' className={styles.upload_btn}>
               Upload New Ticket
             </Button>
           </div>
         </Grid>
       </Grid>
+      <UploadModal open={modalOpen} onClose={handleCloseModal} styles={styles} />
       <Grid container spacing={6} sx={{ marginTop: '0rem', marginBottom: '5rem' }}>
         {cardData.slice(startIndex, endIndex).map((card, index) => (
           <>
@@ -218,7 +238,7 @@ const Home = () => {
                         <span>{card.details.national}</span>
                       </div>
                       <div className={styles.ticketactionicons}>
-                        <IconButton edge='end'>
+                        <IconButton edge='end' onClick={handleEditModalOpen}>
                           <Icon fontSize='1.25rem' icon='tabler:pencil-minus' />
                         </IconButton>
                         <IconButton edge='end'>
@@ -226,6 +246,7 @@ const Home = () => {
                         </IconButton>
                       </div>
                     </Grid>
+                    <EditTicket open={editModalOpen} onClose={() => setEditModalOpen(false)} styles={styles} />
                     <Grid sx={{ display: 'flex', justifyContent: 'space-around' }} className={styles.ticketvs_row}>
                       <div>
                         <h3>{card.details.opponent}</h3>
@@ -310,7 +331,7 @@ const Home = () => {
                             </IconButton>
                           </div>
                           <div className={styles.ticketactionicons}>
-                            <IconButton edge='end'>
+                            <IconButton edge='end' onClick={handleEditModalOpen}>
                               <Icon fontSize='1.25rem' icon='tabler:pencil-minus' />
                             </IconButton>
                             <IconButton edge='end'>

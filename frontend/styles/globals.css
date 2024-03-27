@@ -29,7 +29,41 @@ label {
   color: #131338;
 }
 
-.MuiFormControl-root {
+.content-right .MuiFormControl-root {
+  border: 1px solid #323267 !important;
+  height: 50px !important;
+  border-radius: 12px !important;
+}
+
+.content-right input {
+  border: none !important;
+  line-height: normal !important;
+  padding: 0 !important;
+}
+
+.content-right .MuiFormControl-root .MuiInputBase-formControl {
+  padding: 14px 15px;
+  border: none !important;
+}
+
+.search_field_dashboard .MuiFormControl-root {
+  border: 1px solid #323267 !important;
+  height: 50px !important;
+  border-radius: 12px !important;
+}
+
+.search_field_dashboard input {
+  border: none !important;
+  line-height: normal !important;
+  padding: 0 !important;
+}
+
+.search_field_dashboard .MuiFormControl-root .MuiInputBase-formControl {
+  padding: 14px 15px;
+  border: none !important;
+}
+
+/* .MuiFormControl-root {
   border: 1px solid #323267 !important;
   height: 50px !important;
   border-radius: 12px !important;
@@ -44,6 +78,9 @@ input {
 .MuiFormControl-root .MuiInputBase-formControl {
   padding: 14px 15px;
   border: none !important;
+} */
+input:autofill {
+  box-shadow: none !important;
 }
 
 label {
@@ -54,6 +91,46 @@ label {
 .layout-navbar {
   background: #0C0C1E;
   padding: 10px 0;
+}
+
+.modal_boxpanel .MuiPaper-elevation {
+  background: rgba(3, 3, 43, 1) !important;
+  width: 90%;
+  max-width: 600px;
+  border: 1px solid rgba(70, 73, 89, 1) !important;
+  box-shadow: 0px 6px 40px 0px rgba(0, 0, 0, 0.08) !important;
+  border-radius: 20px !important;
+  height: auto;
+  overflow-y: hidden;
+}
+
+.edit_ticketbox .MuiPaper-elevation {
+  background: rgba(3, 3, 43, 1) !important;
+  width: 90%;
+  max-width: 840px;
+  border: 1px solid rgba(70, 73, 89, 1) !important;
+  box-shadow: 0px 6px 40px 0px rgba(0, 0, 0, 0.08) !important;
+  border-radius: 20px !important;
+  height: auto;
+  overflow-y: hidden;
+}
+
+.modal_boxpanel .dropzone {
+  height: 190px;
+  border-radius: 20px;
+  border: 1.6px dashed rgb(77, 77, 140);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropimg img {
+  max-height: 75px;
+}
+
+.MuiLinearProgress-root {
+  background: rgb(26, 174, 255) !important;
+  opacity: .10 !important;
 }
 
 @media (max-width:850px) {
@@ -72,6 +149,8 @@ label {
     font-size: 22px !important;
     margin: 0 !important;
   }
+
+
 }
 
 @media (max-width:567px) {
@@ -88,6 +167,10 @@ label {
   .logo_header {
     font-size: 20px !important;
     margin: 0 !important;
+  }
+
+  .search_field_dashboard {
+    display: block !important;
   }
 }
 
