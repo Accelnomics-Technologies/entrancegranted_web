@@ -7,7 +7,6 @@ import IconButton from '@mui/material/IconButton'
 import Pagination from '@mui/material/Pagination'
 import Icon from 'src/@core/components/icon'
 import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import CustomTextField from 'src/@core/components/mui/text-field'
 import styles from './home.module.css'
@@ -363,4 +362,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home;

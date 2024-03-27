@@ -3,7 +3,8 @@ import Head from 'next/head'
 import { Router } from 'next/router'
 
 
-
+import Provider from "helpers/reactQueryProvider";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 
 // ** Loader Import
@@ -107,7 +108,7 @@ const App = props => {
           <meta name='keywords' content='Material Design, MUI, Admin Template, React Admin Template' />
           <meta name='viewport' content='initial-scale=1, width=device-width' />
         </Head>
-
+      <Provider>
         <AuthProvider>
           <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
             <SettingsConsumer>
@@ -128,6 +129,8 @@ const App = props => {
             </SettingsConsumer>
           </SettingsProvider>
         </AuthProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+        </Provider>
       </CacheProvider>
    
   )
