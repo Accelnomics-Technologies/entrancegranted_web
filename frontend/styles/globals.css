@@ -56,6 +56,41 @@ label {
   padding: 10px 0;
 }
 
+@media (max-width:850px) {
+  .layout-navbar {
+    padding: 0;
+    background: #0C0C1E !important;
+  }
+
+  .layout-navbar .navbar-content-container {
+    background: transparent;
+    margin-top: 0 !important;
+    padding: 0 !important;
+  }
+
+  .logo_header {
+    font-size: 22px !important;
+    margin: 0 !important;
+  }
+}
+
+@media (max-width:567px) {
+  .logo_header img {
+    display: block;
+    width: 45px !important;
+    height: 45px !important;
+    border-radius: 16px;
+    background: #FFFFFF;
+    padding: 8px;
+    margin-right: 12px;
+  }
+
+  .logo_header {
+    font-size: 20px !important;
+    margin: 0 !important;
+  }
+}
+
 .logo_header {
   font-family: Poppins;
   font-size: 24px;

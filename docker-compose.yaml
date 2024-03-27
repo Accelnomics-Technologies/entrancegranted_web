@@ -4,15 +4,14 @@ services:
   frontend:
     build:
       context: ./frontend
-    command: npm start
-    volumes:
-      - ./frontend/src:/usr/app/src
+    # command: npm dev
+    # image: entrancegranted_web-frontend
+    # volumes:
+    #   - ./frontend:/app
     ports:
-      - '3002:3000'
+      - '3000:3000'
     tty: true # comunicate with terminal
     stdin_open: true # open in/out connection from the terminal
-    environment:
-      - REACT_APP_PORT=3001
     networks:
       - entrancegranted
     container_name: entrancegranted-frontend
@@ -20,12 +19,14 @@ services:
   backend:
     build:
       context: ./backend
+      args:
+        - BUILD_DATE=${BUILD_DATE:-$(date -u +'%Y-%m-%dT%H:%M:%SZ')}
     # command: npm run dev
     volumes:
       - ./backend:/app/
       - ../uploads:/uploads
     ports:
-      - '3001:3001'
+      - '3003:3001'
     environment:
       - PORT=3001
     networks:

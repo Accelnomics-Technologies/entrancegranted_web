@@ -86,8 +86,8 @@ const schema = yup.object().shape({
 })
 
 const defaultValues = {
-  password: 'admin',
-  email: 'admin@brett.fraser.com'
+  password: '',
+  email: ''
 }
 
 const LoginPage = () => {
@@ -196,7 +196,7 @@ const LoginPage = () => {
                         value={value}
                         onBlur={onBlur}
                         onChange={onChange}
-                        placeholder='admin@brett.fraser.com'
+                        placeholder='Enter Email'
                         error={Boolean(errors.email)}
                         {...(errors.email && { helperText: errors.email.message })}
                         InputProps={{
@@ -227,6 +227,7 @@ const LoginPage = () => {
                         onBlur={onBlur}
                         onChange={onChange}
                         id='auth-login-v2-password'
+                        placeholder='Enter Password'
                         error={Boolean(errors.password)}
                         {...(errors.password && { helperText: errors.password.message })}
                         type={showPassword ? 'text' : 'password'}

@@ -11,10 +11,10 @@ const users = [
   {
     id: 1,
     role: 'admin',
-    password: 'admin',
+    password: 'Jaee8@SuiH',
     fullName: 'John Doe',
     username: 'johndoe',
-    email: 'admin@brett.fraser.com'
+    email: 'admin@74store.com'
   },
   {
     id: 2,
