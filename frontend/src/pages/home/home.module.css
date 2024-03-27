@@ -75,6 +75,7 @@
     font-size: 13px;
     font-weight: 400;
     line-height: 21px;
+    color: #1AAEFF;
 }
 
 
@@ -166,6 +167,11 @@
 .ticket_img {
     text-align: center;
     padding-bottom: 6px;
+    max-width: 100% !important;
+}
+
+.ticket_img img {
+    max-width: 100% !important;
 }
 
 .ticketdescription {
@@ -218,9 +224,11 @@
     max-width: 160px;
 }
 
+/* 
 .ticketcard_vl .ticket_img img {
-    width: 100%;
-}
+    width: 150px !important;
+    max-width: 150px !important;
+} */
 
 .ticketcard_vl .ticketdescription {
     padding-top: 20px;
@@ -306,6 +314,15 @@
     display: flex;
     justify-content: center;
     border: none !important;
+}
+
+.view_modalhead {
+    position: relative;
+    text-align: center;
+    display: flex;
+    justify-content: left;
+    border: none !important;
+    padding: 0 35px;
 }
 
 .upload_modalhead h2 {
@@ -443,11 +460,15 @@
 .formimg_field {
     max-height: 300px;
     text-align: center;
+    width: 100%;
 }
 
 .formimg_field img {
-    width: 95%;
+    width: auto;
     margin: 0 auto;
+    height: auto;
+    max-height: 100%;
+    max-width: 100%;
 }
 
 .edit_modal_action {
@@ -488,6 +509,40 @@
     order: 2;
 }
 
+.viewticketcard_vl {
+    border: none !important;
+}
+
+.viewticketcardcontent {
+    padding: 16px !important;
+    background: #1AAEFF1A;
+    border: none !important;
+}
+
+.viewticketcardcontent .date_time_box {
+    min-width: 100% !important;
+    gap: 20% !important;
+    padding: 15px;
+}
+
+.viewticketcardcontent .date_time_box button {
+    width: auto !important;
+}
+
+.share_btn {
+    width: 210px;
+    height: 50px;
+    border-radius: 16px !important;
+    background: linear-gradient(150.24deg, #1AAEFF 12.02%, #41BCFF 84.41%) !important;
+    color: #fff !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    line-height: 24px !important;
+    text-align: center;
+}
+
+
+
 @media (max-width:450px) {
     .edit_modal_action {
         display: flex !important;
@@ -518,6 +573,16 @@
         color: #F32525 !important;
         text-decoration: underline !important;
     }
+
+    .viewticketcardcontent .ticketvs_row h3 {
+        font-size: 14px;
+    }
+
+    .editticket_formfields .formimg_field img {
+        width: auto;
+        margin: 0 auto;
+        max-height: 100%;
+    }
 }
 
 @media (max-width:600px) {
@@ -529,6 +594,13 @@
         min-width: auto !important;
         white-space: nowrap;
         font-size: 14px !important;
+    }
+
+    .ticket_imgvertical img {
+        max-width: 100% !important;
+        width: auto !important;
+        max-height: 200px;
+        margin-top: -20px;
     }
 }
 
@@ -546,6 +618,16 @@
         order: 1;
     }
 
+    .ticket_imgvertical img {
+        max-width: 100% !important;
+        width: auto !important;
+        max-height: 200px;
+        margin-top: -20px;
+    }
+
+    .share_btn {
+        margin: 24px 0 !important;
+    }
 
 }
 
