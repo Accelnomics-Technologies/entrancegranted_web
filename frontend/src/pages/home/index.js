@@ -13,6 +13,10 @@ import CustomTextField from 'src/@core/components/mui/text-field'
 import styles from './home.module.css'
 import UploadModal from 'src/container/UploadModal'
 import EditTicket from 'src/container/EditTicket'
+import ViewTicket from 'src/container/ViewTicketVertical'
+import EditTicketVertical from 'src/container/EditTicketVertical'
+import ViewTicketVertical from 'src/container/ViewTicketVertical'
+import ViewTicketHl from 'src/container/ViewTicketHl'
 
 const Home = () => {
   // Sample card data
@@ -170,18 +174,33 @@ const Home = () => {
 
   const [modalOpen, setModalOpen] = useState(false)
   const [editModalOpen, setEditModalOpen] = useState(false)
+  const [editVerticalModalOpen, setEditVerticalModalOpen] = useState(false)
+  const [viewModalOpen, setViewModalOpen] = useState(false)
+  const [viewVerticalModalOpen, setViewVerticalModalOpen] = useState(false)
 
   const handleUploadClick = () => {
     setModalOpen(true)
   }
 
+  const handleEditModalOpen = () => {
+    setEditModalOpen(true)
+  }
+
+  const handleVerticalEditModalOpen = () => {
+    setEditVerticalModalOpen(true)
+  }
+
+  const handleViewModalOpen = () => {
+    setViewModalOpen(true)
+  }
+
+  const handleVerticalViewModalOpen = () => {
+    setViewVerticalModalOpen(true)
+  }
+
   // Function to handle modal close
   const handleCloseModal = () => {
     setModalOpen(false)
-  }
-
-  const handleEditModalOpen = () => {
-    setEditModalOpen(true)
   }
 
   return (
@@ -241,12 +260,14 @@ const Home = () => {
                         <IconButton edge='end' onClick={handleEditModalOpen}>
                           <Icon fontSize='1.25rem' icon='tabler:pencil-minus' />
                         </IconButton>
-                        <IconButton edge='end'>
+                        <IconButton edge='end' onClick={handleViewModalOpen}>
                           <Icon fontSize='1.25rem' icon='tabler:eye' />
                         </IconButton>
                       </div>
                     </Grid>
                     <EditTicket open={editModalOpen} onClose={() => setEditModalOpen(false)} styles={styles} />
+                    <ViewTicketHl open={viewModalOpen} onClose={() => setViewModalOpen(false)} styles={styles} />
+
                     <Grid sx={{ display: 'flex', justifyContent: 'space-around' }} className={styles.ticketvs_row}>
                       <div>
                         <h3>{card.details.opponent}</h3>
@@ -331,10 +352,10 @@ const Home = () => {
                             </IconButton>
                           </div>
                           <div className={styles.ticketactionicons}>
-                            <IconButton edge='end' onClick={handleEditModalOpen}>
+                            <IconButton edge='end' onClick={handleVerticalEditModalOpen}>
                               <Icon fontSize='1.25rem' icon='tabler:pencil-minus' />
                             </IconButton>
-                            <IconButton edge='end'>
+                            <IconButton edge='end' onClick={handleVerticalViewModalOpen}>
                               <Icon fontSize='1.25rem' icon='tabler:eye' />
                             </IconButton>
                           </div>
@@ -348,6 +369,16 @@ const Home = () => {
                     </Grid>
                     <div className={styles.ticketdescription}>{card.details.description}</div>
                   </CardContent>
+                  <EditTicketVertical
+                    open={editVerticalModalOpen}
+                    onClose={() => setEditVerticalModalOpen(false)}
+                    styles={styles}
+                  />
+                  <ViewTicketVertical
+                    open={viewVerticalModalOpen}
+                    onClose={() => setViewVerticalModalOpen(false)}
+                    styles={styles}
+                  />
                 </Card>
               </Grid>
             )}
