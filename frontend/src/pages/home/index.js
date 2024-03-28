@@ -7,7 +7,6 @@ import IconButton from '@mui/material/IconButton'
 import Pagination from '@mui/material/Pagination'
 import Icon from 'src/@core/components/icon'
 import Card from '@mui/material/Card'
-import CardHeader from '@mui/material/CardHeader'
 import CardContent from '@mui/material/CardContent'
 import CustomTextField from 'src/@core/components/mui/text-field'
 import styles from './home.module.css'
@@ -17,8 +16,13 @@ import ViewTicket from 'src/container/ViewTicketVertical'
 import EditTicketVertical from 'src/container/EditTicketVertical'
 import ViewTicketVertical from 'src/container/ViewTicketVertical'
 import ViewTicketHl from 'src/container/ViewTicketHl'
+import {useGetAllTickets} from "api"
+import { useEffect } from 'react'
 
 const Home = () => {
+  const [ticket, setTicket] = useState([]);
+  const { data: ticketApiData, status: ticketApiStatus } = useGetAllTickets();
+
   // Sample card data
   const cardData = [
     {
@@ -178,6 +182,7 @@ const Home = () => {
   const [viewModalOpen, setViewModalOpen] = useState(false)
   const [viewVerticalModalOpen, setViewVerticalModalOpen] = useState(false)
 
+
   const handleUploadClick = () => {
     setModalOpen(true)
   }
@@ -202,6 +207,17 @@ const Home = () => {
   const handleCloseModal = () => {
     setModalOpen(false)
   }
+
+  useEffect(() => {
+    if (ticketApiStatus === "success") {
+    
+      setTicket(ticketApiData?.data);
+    }
+  }, [ticketApiStatus, ticketApiData]);
+
+console.log(">>",ticket);
+
+
 
   return (
     <>
@@ -245,16 +261,15 @@ const Home = () => {
       </Grid>
       <UploadModal open={modalOpen} onClose={handleCloseModal} styles={styles} />
       <Grid container spacing={6} sx={{ marginTop: '0rem', marginBottom: '5rem' }}>
-        {cardData.slice(startIndex, endIndex).map((card, index) => (
+        {ticket?.slice(startIndex, endIndex).map((card, index) => (
           <>
-            {index % 2 === 0 ? (
-              <Grid item xs={12} md={4} lg={4} key={index}>
+             <Grid item xs={12} md={4} lg={4} key={index}>
                 <Card className={styles.ticketcard_hl}>
                   <CardContent className={styles.ticketcardcontent}>
                     <Grid sx={{ display: 'flex', justifyContent: 'space-between' }}>
                       <div className={styles.ticketfirstrow_h}>
-                        <span>{card.details.location}</span>
-                        <span>{card.details.national}</span>
+                        <span>{card?.eventName}</span>
+                        <span>{card?.sportName}</span>
                       </div>
                       <div className={styles.ticketactionicons}>
                         <IconButton edge='end' onClick={handleEditModalOpen}>
@@ -270,120 +285,44 @@ const Home = () => {
 
                     <Grid sx={{ display: 'flex', justifyContent: 'space-around' }} className={styles.ticketvs_row}>
                       <div>
-                        <h3>{card.details.opponent}</h3>
-                        <p>{card.details.home}</p>
+                      <h3>{card?.homeTeam}</h3>
+                       
+                        <p>home</p>
                       </div>
                       <img src='../../../images/pages/vs.svg' alt='vs' />
                       <div>
-                        <h3>{card.details.opponent}</h3>
-                        <p>{card.details.away}</p>
+                      <h3>{card?.awayTeam}</h3>
+                        <p>away</p>
                       </div>
                     </Grid>
                     <Grid sx={{ display: 'flex', justifyContent: 'space-between' }} className={styles.ticketinforow_h}>
                       <div>
                         <p>Venue</p>
-                        <h5>{card.details.venue}</h5>
+                        <h5>{card?.venue}</h5>
                       </div>
                       <div>
                         <p>Price</p>
-                        <h5>{card.details.price}</h5>
+                        <h5>{card?.price}</h5>
                       </div>
                       <div className={styles.date_time_box}>
                         <IconButton edge='end'>
-                          <Icon fontSize='1.25rem' icon='tabler:calendar-week' /> {card.details.date}
+                          <Icon fontSize='1.25rem' icon='tabler:calendar-week' /> {card?.date}
                         </IconButton>
                         <IconButton edge='end'>
-                          <Icon fontSize='1.25rem' icon='tabler:clock' /> {card.details.time}
+                          <Icon fontSize='1.25rem' icon='tabler:clock' /> {card?.time}
                         </IconButton>
                       </div>
                     </Grid>
                     <hr className={styles.hrline} />
                     <div className={styles.ticket_img}>
-                      <img src='../../../images/pages/ticket-horizondal.png' alt='ticket' />
+                    <img crossorigin="anonymous" src={`${process.env.NEXT_PUBLIC_BE_URL}/ticket_image?ticket_id=${card?._id}`} alt='ticket' />
+
                     </div>
-                    <div className={styles.ticketdescription}>{card.details.description}</div>
+                    <div className={styles.ticketdescription}>{card?.gameDetails}</div>
                   </CardContent>
                 </Card>
               </Grid>
-            ) : (
-              <Grid item xs={12} md={4} lg={4} key={index}>
-                <Card className={styles.ticketcard_vl}>
-                  <CardContent className={styles.ticketcardcontent}>
-                    <Grid container spacing={12}>
-                      <Grid item xs={8} md={7} lg={7}>
-                        <Grid sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                          <div className={styles.ticketfirstrow_h}>
-                            <span>Men’s Basketball</span>
-                            <span>National</span>
-                          </div>
-                        </Grid>
-                        <Grid sx={{ display: 'flex', flexDirection: 'column' }} className={styles.ticketvs_row}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                            <h3>{card.details.location}</h3>
-                            <p>{card.details.home}</p>
-                          </div>
-                          <img src='../../../images/pages/vs.svg' alt='vs' />
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
-                            <h3>{card.details.opponent}</h3>
-                            <p>{card.details.away}</p>
-                          </div>
-                        </Grid>
-                        <Grid
-                          sx={{ display: 'flex', justifyContent: 'space-between' }}
-                          className={styles.ticketinforow_h}
-                        >
-                          <div>
-                            <p>Venue</p>
-                            <h5>{card.details.venue}</h5>
-                          </div>
-                          <div>
-                            <p>Price</p>
-                            <h5>{card.details.price}</h5>
-                          </div>
-                        </Grid>
-                        <hr className={styles.hrline} />
-                        <Grid sx={{ display: 'flex', justifyContent: 'space-between', marginTop: '15px' }}>
-                          <div className={styles.date_time_box}>
-                            <IconButton edge='end'>
-                              <Icon fontSize='1.25rem' icon='tabler:calendar-week' /> {card.details.date}
-                            </IconButton>
-                            <IconButton edge='end'>
-                              <Icon fontSize='1.25rem' icon='tabler:clock' /> {card.details.time}
-                            </IconButton>
-                          </div>
-                          <div className={styles.ticketactionicons}>
-                            <IconButton edge='end' onClick={handleVerticalEditModalOpen}>
-                              <Icon fontSize='1.25rem' icon='tabler:pencil-minus' />
-                            </IconButton>
-                            <IconButton edge='end' onClick={handleVerticalViewModalOpen}>
-                              <Icon fontSize='1.25rem' icon='tabler:eye' />
-                            </IconButton>
-                          </div>
-                        </Grid>
-                      </Grid>
-                      <Grid item xs={4} md={5} lg={5} className={styles.vr_imgcol}>
-                        <div className={styles.ticket_img}>
-                          <img src='../../../images/pages/ticket-vertical.png' alt='ticket' />
-                        </div>
-                      </Grid>
-                    </Grid>
-                    <div className={styles.ticketdescription}>{card.details.description}</div>
-                  </CardContent>
-                  <EditTicketVertical
-                    open={editVerticalModalOpen}
-                    onClose={() => setEditVerticalModalOpen(false)}
-                    styles={styles}
-                  />
-                  <ViewTicketVertical
-                    open={viewVerticalModalOpen}
-                    onClose={() => setViewVerticalModalOpen(false)}
-                    styles={styles}
-                  />
-                </Card>
-              </Grid>
-            )}
-          </>
-        ))}
+          </>))}
       </Grid>
       <Grid item xs={12} className={styles.pagination_row}>
         <div className='flex justify-center mt-4'>
@@ -394,4 +333,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Home;

@@ -1,9 +1,10 @@
 // ** Next Imports
 import Head from 'next/head'
-import { Router } from 'next/router'
+import { Router, useRouter } from 'next/router'
 
 
-
+import Provider from "helpers/reactQueryProvider";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 
 // ** Loader Import
@@ -55,6 +56,8 @@ import 'src/iconify-bundle/icons-bundle-react'
 
 // ** Global css styles
 import '../../styles/globals.css'
+import { useAppStore } from 'store/store';
+import { useEffect } from 'react';
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -71,18 +74,13 @@ if (themeConfig.routingLoader) {
   })
 }
 
-const Guard = ({ children, authGuard, guestGuard }) => {
-  if (guestGuard) {
-    return <GuestGuard fallback={<Spinner />}>{children}</GuestGuard>
-  } else if (!guestGuard && !authGuard) {
-    return <>{children}</>
-  } else {
-    return <AuthGuard fallback={<Spinner />}>{children}</AuthGuard>
-  }
-}
+
 
 // ** Configure JSS & ClassName
 const App = props => {
+
+  const router=useRouter()
+
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
   // Variables
@@ -94,6 +92,18 @@ const App = props => {
   const authGuard = Component.authGuard ?? true
   const guestGuard = Component.guestGuard ?? false
   const aclAbilities = Component.acl ?? defaultACLObj
+
+
+  const isAuthenticated = useAppStore((store) => store?.user?.isAuthenticated);
+
+  useEffect(()=>{
+    if(!isAuthenticated){
+      router?.push("/login/")
+    }else if(isAuthenticated && router?.pathname?.includes("login")){
+      router?.push("/home/")
+    }
+  },[isAuthenticated])
+
 
   return (
     
@@ -107,18 +117,17 @@ const App = props => {
           <meta name='keywords' content='Material Design, MUI, Admin Template, React Admin Template' />
           <meta name='viewport' content='initial-scale=1, width=device-width' />
         </Head>
+      <Provider>
 
-        <AuthProvider>
           <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
             <SettingsConsumer>
               {({ settings }) => {
                 return (
                   <ThemeComponent settings={settings}>
-                    <Guard authGuard={authGuard} guestGuard={guestGuard}>
-                      <AclGuard aclAbilities={aclAbilities} guestGuard={guestGuard} authGuard={authGuard}>
+   
+                      
                         {getLayout(<Component {...pageProps} />)}
-                      </AclGuard>
-                    </Guard>
+                
                     <ReactHotToast>
                       <Toaster position={settings.toastPosition} toastOptions={{ className: 'react-hot-toast' }} />
                     </ReactHotToast>
@@ -127,7 +136,9 @@ const App = props => {
               }}
             </SettingsConsumer>
           </SettingsProvider>
-        </AuthProvider>
+     
+         <ReactQueryDevtools initialIsOpen={false} />
+        </Provider>
       </CacheProvider>
    
   )

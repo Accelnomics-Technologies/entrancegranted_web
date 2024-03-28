@@ -76,8 +76,7 @@ const UserDropdown = props => {
   }
 
   const handleLogout = () => {
-    logout()
-    handleDropdownClose()
+    router?.push("/login/")
   }
 
   return (

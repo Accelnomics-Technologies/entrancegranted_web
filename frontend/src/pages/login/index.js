@@ -5,7 +5,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 
 // ** MUI Components
-import Alert from '@mui/material/Alert'
+
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 import Checkbox from '@mui/material/Checkbox'
@@ -16,6 +16,7 @@ import useMediaQuery from '@mui/material/useMediaQuery'
 import { styled, useTheme } from '@mui/material/styles'
 import InputAdornment from '@mui/material/InputAdornment'
 import MuiFormControlLabel from '@mui/material/FormControlLabel'
+import {Alert} from "../../components/utils"
 
 // ** Custom Component Import
 import CustomTextField from 'src/@core/components/mui/text-field'
@@ -27,11 +28,14 @@ import Icon from 'src/@core/components/icon'
 import * as yup from 'yup'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import  {useRouter} from "next/router"
 
 // ** Hooks
 import { useAuth } from 'src/hooks/useAuth'
 import useBgColor from 'src/@core/hooks/useBgColor'
 import { useSettings } from 'src/@core/hooks/useSettings'
+//import api from index
+import {usePostSignIn} from "api"
 
 // ** Configs
 import themeConfig from 'src/configs/themeConfig'
@@ -39,6 +43,7 @@ import themeConfig from 'src/configs/themeConfig'
 // ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout'
 import styles from './auth.module.css'
+import { useAppStore } from 'store/store'
 
 // ** Demo Imports
 
@@ -93,6 +98,11 @@ const defaultValues = {
 const LoginPage = () => {
   const [rememberMe, setRememberMe] = useState(true)
   const [showPassword, setShowPassword] = useState(false)
+  const login = useAppStore((store) => store?.login);
+
+  const {mutateAsync:signIn}=usePostSignIn()
+
+  const router=useRouter()
 
   // ** Hooks
   const auth = useAuth()
@@ -116,14 +126,36 @@ const LoginPage = () => {
     resolver: yupResolver(schema)
   })
 
-  const onSubmit = data => {
-    const { email, password } = data
-    auth.login({ email, password, rememberMe }, () => {
+  const onSubmit = async (data) => {
+
+    const response=await signIn(data)
+
+    if(response?.success){
+      login({
+        email: response?.data?.user?.email,
+        userId: response?.data?.user?.userId,
+        role: response?.data?.user?.role,
+        token: response?.data?.token,
+        firstName: response?.data?.user?.firstName,
+        lastName: response?.data?.user?.lastName,
+        status: response?.data?.user?.status,
+      });
+      await Alert({
+        title:"Success",
+        icon:"success",
+        text:"Login Success"
+      })
+      
+      router?.push("/home/")
+
+
+    } else{
       setError('email', {
         type: 'manual',
         message: 'Email or Password is invalid'
       })
-    })
+    }
+
   }
   const imageSource = skin === 'bordered' ? 'auth-v2-login-illustration-bordered' : 'auth-v2-login-illustration'
 

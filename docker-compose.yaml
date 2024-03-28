@@ -23,7 +23,8 @@ services:
         - BUILD_DATE=${BUILD_DATE:-$(date -u +'%Y-%m-%dT%H:%M:%SZ')}
     # command: npm run dev
     volumes:
-      - ./backend:/app
+      - ./backend:/app/
+      - ../uploads:/uploads
     ports:
       - '3003:3001'
     environment:
