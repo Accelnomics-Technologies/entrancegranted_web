@@ -172,9 +172,9 @@ const Home = () => {
 
   // Pagination constants
   const cardsPerPage = 6
-  const totalPages = Math.ceil(cardData.length / cardsPerPage)
+  const totalPages = Math.ceil(ticket?.length / cardsPerPage)
   const startIndex = (page - 1) * cardsPerPage
-  const endIndex = Math.min(startIndex + cardsPerPage, cardData.length)
+  const endIndex = Math.min(startIndex + cardsPerPage, ticket?.length)
 
   const [modalOpen, setModalOpen] = useState(false)
   const [editModalOpen, setEditModalOpen] = useState(false)
