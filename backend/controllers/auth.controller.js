@@ -20,11 +20,12 @@ module.exports.signUp = async (req, res) => {
       lastName: joi.string().required(),
       email: joi.string().email().required(),
       password: joi.string().required(),
+      role: joi.string().valid("admin", "user").required(),
     });
 
     await schema.validateAsync(req.body);
 
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password,role } = req.body;
 
     let user = await userSchema.findOne({ email: email?.toLowerCase() });
 
@@ -39,6 +40,7 @@ module.exports.signUp = async (req, res) => {
       lastName,
       email,
       password: hashedPassword,
+      role
     });
 
     return responseHandler(res, "User Created", { firstName, lastName, email });
