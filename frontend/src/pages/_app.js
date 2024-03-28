@@ -1,6 +1,6 @@
 // ** Next Imports
 import Head from 'next/head'
-import { Router } from 'next/router'
+import { Router, useRouter } from 'next/router'
 
 
 import Provider from "helpers/reactQueryProvider";
@@ -56,6 +56,8 @@ import 'src/iconify-bundle/icons-bundle-react'
 
 // ** Global css styles
 import '../../styles/globals.css'
+import { useAppStore } from 'store/store';
+import { useEffect } from 'react';
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -76,6 +78,9 @@ if (themeConfig.routingLoader) {
 
 // ** Configure JSS & ClassName
 const App = props => {
+
+  const router=useRouter()
+
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
   // Variables
@@ -87,6 +92,18 @@ const App = props => {
   const authGuard = Component.authGuard ?? true
   const guestGuard = Component.guestGuard ?? false
   const aclAbilities = Component.acl ?? defaultACLObj
+
+
+  const isAuthenticated = useAppStore((store) => store?.user?.isAuthenticated);
+
+  useEffect(()=>{
+    if(!isAuthenticated){
+      router?.push("/login/")
+    }else if(isAuthenticated && router?.pathname?.includes("login")){
+      router?.push("/home/")
+    }
+  },[isAuthenticated])
+
 
   return (
     

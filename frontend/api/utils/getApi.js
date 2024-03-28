@@ -34,6 +34,7 @@ instance.interceptors.response.use(
 export const getApi = async (url) => {
   try {
     const { data } = await instance.get(`/${url}`, { withCredentials: true });
+
     return {
       data: data?.data,
       message: data?.message,

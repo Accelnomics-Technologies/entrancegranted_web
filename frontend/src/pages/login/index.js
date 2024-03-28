@@ -34,7 +34,7 @@ import  {useRouter} from "next/router"
 import { useAuth } from 'src/hooks/useAuth'
 import useBgColor from 'src/@core/hooks/useBgColor'
 import { useSettings } from 'src/@core/hooks/useSettings'
-
+//import api from index
 import {usePostSignIn} from "api"
 
 // ** Configs
@@ -43,6 +43,7 @@ import themeConfig from 'src/configs/themeConfig'
 // ** Layout Import
 import BlankLayout from 'src/@core/layouts/BlankLayout'
 import styles from './auth.module.css'
+import { useAppStore } from 'store/store'
 
 // ** Demo Imports
 
@@ -97,6 +98,7 @@ const defaultValues = {
 const LoginPage = () => {
   const [rememberMe, setRememberMe] = useState(true)
   const [showPassword, setShowPassword] = useState(false)
+  const login = useAppStore((store) => store?.login);
 
   const {mutateAsync:signIn}=usePostSignIn()
 
@@ -129,6 +131,15 @@ const LoginPage = () => {
     const response=await signIn(data)
 
     if(response?.success){
+      login({
+        email: response?.data?.user?.email,
+        userId: response?.data?.user?.userId,
+        role: response?.data?.user?.role,
+        token: response?.data?.token,
+        firstName: response?.data?.user?.firstName,
+        lastName: response?.data?.user?.lastName,
+        status: response?.data?.user?.status,
+      });
       await Alert({
         title:"Success",
         icon:"success",
