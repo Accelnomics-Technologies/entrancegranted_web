@@ -4,9 +4,12 @@ const upload = multer(); // Initialize multer
 const {ticketSchema} = require("../../models/tickets")
 var AWS = require('aws-sdk');
 const { OpenAI } = require('openai');
-const fs = require('fs');
+
 const { getJSONFromImage } = require('../../utils/json_from_image');
-const path = require("path");
+const path = require('path');
+const fs = require('fs').promises;
+const { responseHandler, errorHandler, catchHandler } = require("../../utils");
+const { error } = require("console");
 
 
 /**
@@ -66,11 +69,11 @@ module.exports.getTicket = async (req, res) => {
     
         // If the ticket is not found, return a 404 Not Found response
         if (!ticket) {
-          return res.status(404).json({ error: 'Ticket not found' });
+          return errorHandler(res,"Ticket Not Found",400)
         }
     
         // If the ticket is found, return it as a JSON response
-        res.json(ticket);
+        return responseHandler(res,"Ticket",tickets) 
       } catch (err) {
         // If an error occurs, return a 500 Internal Server Error response
         console.error('Error fetching ticket:', err);
@@ -88,10 +91,9 @@ module.exports.get_Alltickets = async (req, res) => {
     try {
         // Fetch all tickets from the database
         const tickets = await ticketSchema.find({});
-        res.json(tickets); // Send the tickets as JSON response
+          return responseHandler(res,"Tickets",tickets) // Send the tickets as JSON response
       } catch (err) {
-        console.error('Error fetching tickets:', err);
-        res.status(500).json({ error: 'Internal Server Error' });
+          return catchHandler(res,req,error)
       }
 
 };
@@ -166,27 +168,29 @@ module.exports.updateTicket = async (req, res) => {
  
 };
 
-/**
- * @api {GET} /api/admin/update_tickets
- * @params ticketId
- */
 module.exports.getTicketImage = async (req, res) => {
-    try {
-        // Get the ticket ID from the request parameters
-        const ticketId = req.query.ticket_id;
-        const ticket = await ticketSchema.findById(ticketId);
+  try {
+      // Get the ticket ID from the request parameters
+      const ticketId = req.query.ticket_id;
+      const ticket = await ticketSchema.findById(ticketId);
 
-        if (!ticket) {
+      if (!ticket) {
           return res.status(404).json({ error: 'Ticket not found' });
-        }
+      }
 
-        const imageLocation = ticket.imageLocation;
+      const imageLocation = ticket.imageLocation;
+
+      // Read the image file
+      const imageData = await fs.readFile(path.join(__dirname, '..', '..', '..', imageLocation));
+
+      // Set Content-Type header
     
-    
-        res.sendFile(path.join(__dirname, '..', '..', '..', imageLocation));
-    } catch (err) {
+
+      // Send the image data as response
+      res.end(imageData);
+  } catch (err) {
       // If an error occurs, return a 500 Internal Server Error response
-        console.error('Error serving image:', err);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
+      console.error('Error serving image:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
 };

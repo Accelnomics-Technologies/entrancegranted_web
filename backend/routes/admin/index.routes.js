@@ -12,7 +12,7 @@ router.get("/tickets", getTicket);
 router.get("/all_Ticket", get_Alltickets);
 router.post("/del_tickets", deleteTicket);
 router.post("/update_tickets", updateTicket);
-router.get("/ticket_image", getTicketImage);
+
 
 
 

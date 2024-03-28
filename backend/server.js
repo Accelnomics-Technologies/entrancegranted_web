@@ -13,6 +13,7 @@ const apiRoutes = require("./routes/index");
 
 const path = require("path"); 
 const { errorHandler } = require("./utils");
+const { getTicketImage } = require("./controllers/admin/admin.controller");
 const uploadsDirectory = path.join(__dirname, "..",'uploads');
 
 
@@ -28,12 +29,12 @@ mongoose.connection.on("error", (error) => {
   console.log(`Database not working!!!: ${error}`, "error");
 });
 
-const port = process.env.PORT || 4001;
+const port = process.env.PORT || 3003;
 
 // Mongoose Debug Mode
 mongoose.set("debug", process.env.NODE_ENV !== "production");
 
-const originLocal = ["http://localhost:3000"];
+const originLocal = ["http://localhost:3000","http://localhost:3003"];
 
 
 //middlewares
@@ -61,6 +62,7 @@ app.use(
   })
 );
 
+app.get("/ticket_image", getTicketImage);
 
 //routes
 app.use("/api", apiRoutes);
